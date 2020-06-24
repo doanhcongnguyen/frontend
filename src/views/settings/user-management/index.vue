@@ -5,7 +5,7 @@
       <div class="page-content">
         <Search
           :search-form="searchModel"
-          @do-search="doSearch"
+          @do-search="search"
         />
 
         <el-button :disabled="selectedModels.length === 0" type="text" icon="el-icon-remove" class="btn-container danger" @click="handleDelete">{{ $t('global.button.delete') }}</el-button>
@@ -27,10 +27,10 @@
         />
 
         <Pagination
-          :total="total"
-          :page.sync="listQuery.page"
-          :limit.sync="listQuery.limit"
-          @pagination="changePagination"
+          :total="pagination.total"
+          :page.sync="pagination.page"
+          :limit.sync="pagination.limit"
+          @pagination="search"
         />
       </div>
     </el-card>
@@ -43,7 +43,7 @@ import List from './components/List'
 import Add from './components/Add'
 import Pagination from '@/components/Pagination'
 
-import { getList, doDelete, filter } from '@/api/user-management'
+import { doDelete, filter } from '@/api/user-management'
 import { showSuccessMessage, createConfirmBox } from '@/utils/commons'
 
 export default {
@@ -62,8 +62,8 @@ export default {
       selectedModels: [],
       list: undefined,
       loading: true,
-      total: 0,
-      listQuery: {
+      pagination: {
+        total: 0,
         page: 1,
         limit: 20
       }
@@ -78,17 +78,9 @@ export default {
     },
     async search() {
       this.loading = true
-      const searchModelData = this.buildSearchModel()
-      const response = await filter(searchModelData)
-      this.list = response.content
-      this.total = response.totalElements
-      this.listQuery.page = response.pageable.pageNumber + 1
-      this.loading = false
-    },
-    async getList() {
-      this.loading = true
-      const response = await getList()
-      this.list = response.content
+      this.addPaginationToSearchModel()
+      const response = await filter(this.searchModel)
+      this.showResult(response)
       this.loading = false
     },
     handleAdd() {
@@ -123,22 +115,15 @@ export default {
       this.dialogFormVisible = false
       this.refreshList()
     },
-    changePagination(pageData) {
-      this.listQuery.page = pageData.page
-      this.listQuery.limit = pageData.limit
-      this.search()
+    showResult(response) {
+      this.list = response.content
+      this.pagination.total = response.totalElements
+      this.pagination.page = response.pageable.pageNumber + 1
     },
-    buildSearchModel() {
-      const searchModel = JSON.parse(JSON.stringify(this.searchModel))
-      searchModel.pageSize = this.listQuery.limit
-      searchModel.pageNumber = this.listQuery.page
-      return searchModel
-    },
-    doSearch() {
-      this.listQuery.page = 1
-      this.search()
+    addPaginationToSearchModel() {
+      this.searchModel.pageSize = this.pagination.limit
+      this.searchModel.pageNumber = this.pagination.page
     }
   }
 }
-
 </script>

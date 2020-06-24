@@ -4,9 +4,11 @@
     :data="list"
     element-loading-text="Loading"
     border
+    stripe
     fit
     highlight-current-row
     style="width: 100%"
+    header-row-class-name="table-header"
     row-key="id"
     size="mini"
     @selection-change="handleSelect"

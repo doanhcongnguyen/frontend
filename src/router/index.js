@@ -6,6 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import SettingsRouter from './settingsRouter'
+import MilestoneRouter from './milestoneRouter'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -55,7 +56,8 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-  SettingsRouter
+  SettingsRouter,
+  MilestoneRouter
   // {
   //   path: '/example',
   //   component: Layout,
