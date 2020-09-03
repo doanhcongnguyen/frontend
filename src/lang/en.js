@@ -32,6 +32,7 @@ export default {
       name: 'Username',
       fullName: 'Full name',
       phoneNumber: 'Phone number',
+      password: 'Password',
       email: 'Email',
       createTitle: 'Create user',
       updateTitle: 'Update user',

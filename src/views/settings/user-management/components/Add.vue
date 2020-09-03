@@ -8,6 +8,9 @@
         <el-form-item :label="$t('settings.user.fullName')" prop="fullName">
           <el-input v-model="form.fullName" class="form-item" />
         </el-form-item>
+        <el-form-item :label="$t('settings.user.password')">
+          <el-input v-model="form.password" class="form-item" />
+        </el-form-item>
         <el-form-item :label="$t('settings.user.phoneNumber')">
           <el-input v-model="form.telephone" class="form-item" />
         </el-form-item>
