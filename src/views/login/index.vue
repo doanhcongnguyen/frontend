@@ -40,6 +40,11 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
+      <el-form-item>
+        <el-select v-model="loginForm.language" placeholder="Language" style="width: 33rem">
+          <el-option v-for="item in languages" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+      </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
@@ -62,7 +67,8 @@ export default {
     return {
       loginForm: {
         username: 'doanhnc',
-        password: '1'
+        password: '1',
+        language: this.$store.getters.language
       },
       loginRules: {
         username: [{ required: true, message: this.$i18n.t('validate.required', { name: 'Username' }), trigger: 'blur' }],
@@ -70,7 +76,8 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      languages: [{ value: 'en', label: 'English' }, { value: 'vi', label: 'Tiếng Việt' }]
     }
   },
   watch: {
@@ -97,6 +104,8 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.$i18n.locale = this.loginForm.language
+            this.$store.dispatch('app/setLanguage', this.loginForm.language)
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
