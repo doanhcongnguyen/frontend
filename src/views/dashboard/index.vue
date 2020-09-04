@@ -8,7 +8,7 @@
             {{ name }}<br>
           </el-form-item>
           <el-form-item :label="$t('global.label.role')">
-            <span v-for="role in roles" :key="role">{{ role }}</span>
+            <span v-for="role in roles" :key="role">{{ role }}, </span>
           </el-form-item>
         </el-form>
       </div>

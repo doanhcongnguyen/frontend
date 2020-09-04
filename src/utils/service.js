@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-// import { getToken } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -13,10 +13,9 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // TODO: use token here..
-    // if (store.getters.token) {
-    //   config.headers['Authorization'] = 'Bearer ' + getToken()
-    // }
+    if (store.getters.token) {
+      config.headers['Authorization'] = 'Bearer ' + getToken()
+    }
     config.headers['Content-Type'] = 'application/json'
     return config
   },
@@ -57,6 +56,7 @@ service.interceptors.response.use(
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
+          dangerouslyUseHTMLString: true,
           type: 'warning'
         }).then(() => {
           store.dispatch('user/resetToken').then(() => {
