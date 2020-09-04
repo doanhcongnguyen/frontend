@@ -1,8 +1,7 @@
 import { logout } from '@/api/user'
 import { login } from '@/api/auth'
-import { getToken, setToken, removeToken, setRoles } from '@/utils/auth'
+import { getToken, setToken, removeToken, getRolesFromToken, getFullnameFromToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-import jwt_decode from 'jwt-decode'
 
 const getDefaultState = () => {
   return {
@@ -33,26 +32,26 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
 
-    function getRole(token) {
-      var decoded = jwt_decode(token)
-      return decoded.authorities
-    }
-
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         const token = data.access_token
         commit('SET_TOKEN', token)
         setToken(token)
-        const roles = getRole(token)
-        commit('SET_ROLES', roles)
-        setRoles(roles)
+        commit('SET_ROLES', getRolesFromToken(token))
         commit('SET_NAME', data.fullName)
         resolve()
       }).catch(error => {
         reject(error)
       })
     })
+  },
+
+  // get user info
+  getInfo({ commit }) {
+    const token = getToken()
+    commit('SET_ROLES', getRolesFromToken(token))
+    commit('SET_NAME', getFullnameFromToken(token))
   },
 
   // user logout

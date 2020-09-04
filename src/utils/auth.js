@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
+import jwt_decode from 'jwt-decode'
 
 const TokenKey = 'dcn_app_token'
-const RoleKey = 'dcn_app_role'
 
 export function getToken() {
   return Cookies.get(TokenKey)
@@ -15,10 +15,12 @@ export function removeToken() {
   return Cookies.remove(TokenKey)
 }
 
-export function getRoles() {
-  return Cookies.get(RoleKey)
+export function getRolesFromToken(token) {
+  const decoded = jwt_decode(token)
+  return decoded.authorities
 }
 
-export function setRoles(roles) {
-  return Cookies.set(RoleKey, roles)
+export function getFullnameFromToken(token) {
+  const decoded = jwt_decode(token)
+  return decoded.fullName
 }
