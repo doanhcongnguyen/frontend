@@ -5,6 +5,7 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+      <span class="username">{{ name }}</span>
       <lang-select class="international right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -40,7 +41,7 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'name'
     ])
   },
   methods: {
@@ -56,14 +57,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.username {
+  font-weight: bold;
+  font-size: 13px;
+  vertical-align: 1rem;
+}
+
 .international-icon {
   font-size: 27px;
   cursor: pointer;
-  vertical-align: 6px!important;
+  vertical-align: 0.4rem!important;
 }
 
 .navbar {
-  height: 50px;
+  height: 3rem;
   overflow: hidden;
   position: relative;
   background: #fff;
