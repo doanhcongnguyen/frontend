@@ -18,6 +18,7 @@
           type="text"
           tabindex="1"
           auto-complete="on"
+          @keyup.enter.native="handleLogin"
         />
       </el-form-item>
 
@@ -48,14 +49,18 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
+      <div class="text-align-right">
+        <span>v{{ appVersion }}</span>
+      </div>
     </el-form>
   </div>
 </template>
 
 <script>
+import { showErrorWithMessage } from '@/utils/commons'
+import { version } from '@../../../package.json'
 
 export default {
-  name: 'Login',
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 1) {
@@ -65,9 +70,10 @@ export default {
       }
     }
     return {
+      appVersion: version,
       loginForm: {
-        username: 'doanhnc',
-        password: '1',
+        username: '',
+        password: '',
         language: this.$store.getters.language
       },
       loginRules: {
@@ -108,12 +114,10 @@ export default {
             this.$store.dispatch('app/setLanguage', this.loginForm.language)
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
-          }).catch(() => {
+          }).catch((e) => {
+            showErrorWithMessage('Invalid username or password')
             this.loading = false
           })
-        } else {
-          console.log('error submit!!')
-          return false
         }
       })
     }
@@ -124,8 +128,8 @@ export default {
 <style lang="scss">
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
-$light_gray:#fff;
+$bg:#ecf5ff;
+$light_gray:#1076e2;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -142,12 +146,12 @@ $cursor: #fff;
     width: 85%;
 
     input {
-      background: transparent;
+      background: #dcdfe6;
       border: 0px;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: #000000;
       height: 47px;
       caret-color: $cursor;
 
@@ -168,9 +172,10 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#ecf5ff;
 $dark_gray:#889aa4;
-$light_gray:#eee;
+// $light_gray:#eee;
+$light_gray:#1076e2;
 
 .login-container {
   min-height: 100%;
