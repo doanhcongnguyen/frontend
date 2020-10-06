@@ -63,7 +63,7 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
-    background: #fafafa;
+    background: #f5f7fa;
     &.mobile.openSidebar{
       position: fixed;
       top: 0;
@@ -103,11 +103,11 @@ export default {
     right: 0;
     z-index: 9;
     height: 40px;
-    width: calc(100% - #{$sideBarWidth});
+    width: calc(100% - 1.4rem);
     transition: width 0.28s;
   }
 
   .hideSidebar .fixed-footer {
-    width: calc(100% - 54px)
+    width: calc(100% - 1.4rem)
   }
 </style>
