@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getToken } from '@/utils/auth'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_AA_SERVER,
@@ -16,6 +17,25 @@ export function login(data) {
       'Content-Type': 'application/json'
     },
     data: formData
+  })
+}
+
+export function logout() {
+  // TODO: send logout to backend
+  return new Promise((resolve, reject) => {
+    resolve()
+  })
+}
+
+export function changePass(data) {
+  return service({
+    url: '/change-pass',
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + getToken(),
+      'Content-Type': 'application/json'
+    },
+    data: data
   })
 }
 

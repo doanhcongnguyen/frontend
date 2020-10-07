@@ -132,6 +132,10 @@ $bg:#ecf5ff;
 $light_gray:#1076e2;
 $cursor: #fff;
 
+.text-align-right {
+  text-align: right;
+}
+
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
     color: $cursor;

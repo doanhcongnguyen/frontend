@@ -17,11 +17,17 @@
               Home
             </el-dropdown-item>
           </router-link>
+          <el-dropdown-item divided @click.native="changePass">
+            <span class="display-block">Change password</span>
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
+            <span class="display-block">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+
+      <ChangePass :change-pass-form-visible="changePassFormVisible" :user="name" @close-dialog="closeDialog" />
+
     </div>
   </div>
 </template>
@@ -31,12 +37,19 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
+import ChangePass from '@/components/ChangePass'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-    LangSelect
+    LangSelect,
+    ChangePass
+  },
+  data() {
+    return {
+      changePassFormVisible: false
+    }
   },
   computed: {
     ...mapGetters([
@@ -48,6 +61,12 @@ export default {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
+    changePass() {
+      this.changePassFormVisible = true
+    },
+    closeDialog() {
+      this.changePassFormVisible = false
+    },
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
@@ -57,6 +76,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.display-block {
+  display: block;
+}
+
 .username {
   font-weight: bold;
   font-size: 13px;
