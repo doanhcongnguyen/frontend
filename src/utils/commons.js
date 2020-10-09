@@ -1,4 +1,5 @@
 import { Notification } from 'element-ui'
+import store from '@/store'
 import i18n from '@/lang'
 
 const _3s = 3 * 1000
@@ -39,7 +40,7 @@ export function showErrorWithMessage(message) {
 }
 
 export function createConfirmBox(vm, warningText) {
-  return this.$confirm(
+  return vm.$confirm(
     warningText,
     i18n.t('global.warning'),
     {
@@ -48,4 +49,11 @@ export function createConfirmBox(vm, warningText) {
       type: 'warning'
     }
   )
+}
+
+export async function redirectToLogin() {
+  if (store && !location.href.includes('login')) {
+    await store.dispatch('user/logout')
+    location.href = '/login'
+  }
 }

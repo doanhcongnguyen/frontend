@@ -34,7 +34,7 @@
 
 <script>
 import { doDelete } from '@/api/user-management'
-import { showSuccessMessage } from '@/utils/commons'
+import { showSuccessMessage, createConfirmBox } from '@/utils/commons'
 
 export default {
   props: {
@@ -56,19 +56,8 @@ export default {
       this.$emit('on-handle-update', model)
     },
     async handleDeleteItem(model) {
-      await this.createConfirmBox(model)
+      await createConfirmBox(this, this.$i18n.t('settings.user.deleteWarning') + ` ${model.username}?`)
       this.continueDeleteItem(model)
-    },
-    createConfirmBox(model) {
-      return this.$confirm(
-        this.$i18n.t('settings.user.deleteWarning') + ` ${model.username}?`,
-        this.$i18n.t('global.warning'),
-        {
-          confirmButtonText: this.$i18n.t('global.button.ok'),
-          cancelButtonText: this.$i18n.t('global.button.cancel'),
-          type: 'warning'
-        }
-      )
     },
     async continueDeleteItem(model) {
       await doDelete(model.id)

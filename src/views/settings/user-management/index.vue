@@ -97,14 +97,14 @@ export default {
       this.selectedModels = model
     },
     async handleDelete() {
-      await createConfirmBox(this.$i18n.t('settings.user.multipleDeleteWarning'))
+      await createConfirmBox(this, this.$i18n.t('settings.user.multipleDeleteWarning'))
       this.continueDelete()
     },
     async continueDelete() {
       // TODO: need create api to delele all
-      this.selectedModels.forEach(e => {
-        doDelete(e.id)
-      })
+      for (const model of this.selectedModels) {
+        await doDelete(model.id)
+      }
       this.refreshList()
       showSuccessMessage()
     },
