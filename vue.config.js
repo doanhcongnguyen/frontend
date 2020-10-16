@@ -77,6 +77,15 @@ module.exports = {
       })
       .end()
 
+    // eslint
+    config.module
+      .rule('eslint')
+      .use('eslint-loader')
+      .options({
+        fix: true
+      })
+      .end()
+
     config
     // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
