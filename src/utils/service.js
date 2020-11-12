@@ -2,7 +2,8 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import { showErrorWithMessage } from '@/utils/commons'
 import store from '@/store'
-import { getToken, redirectToLogin } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
+import { redirectToLogin } from '@/utils/commons'
 
 // create an axios instance
 const service = axios.create({
@@ -73,7 +74,7 @@ service.interceptors.response.use(
     console.log(JSON.stringify(response)) // for debug
     if (response && response.data) {
       const data = response.data
-      if (data.status === 401) {
+      if (data.error === 'invalid_token' || data.status === 401) {
         redirectToLogin()
       } else {
         showErrorWithMessage(data.message)
