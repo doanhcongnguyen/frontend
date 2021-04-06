@@ -102,12 +102,12 @@ export default {
     bottom: 0;
     right: 0;
     z-index: 9;
-    height: 40px;
-    width: calc(100% - 1.4rem);
+    height: 2rem;
+    width: calc(100% - 0.5rem);
     transition: width 0.28s;
   }
 
   .hideSidebar .fixed-footer {
-    width: calc(100% - 1.4rem)
+    width: calc(100% - 0.5rem)
   }
 </style>

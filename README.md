@@ -23,8 +23,8 @@ Access on browser
   http://localhost:8898/
 
 # Deployment
-docker build . -t pms-frontend
+docker build . -t frontend
 
-docker run -d -p 80:80 pms-frontend
+docker run -d -p 80:80 frontend
 
 curl localhost

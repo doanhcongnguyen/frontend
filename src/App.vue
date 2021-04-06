@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: 'PMS'
+  name: 'Dcn'
 }
 </script>

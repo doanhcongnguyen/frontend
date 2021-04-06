@@ -1,1 +1,1 @@
-sudo docker run -d -p 80:80 pms-frontend
+sudo docker run -d -p 80:80 frontend

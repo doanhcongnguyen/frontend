@@ -1,9 +1,9 @@
 {
-  "name": "pms",
+  "name": "frontend-app",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "Project management support",
-  "author": "FnF",
+  "description": "Frontend",
+  "author": "dcn",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",

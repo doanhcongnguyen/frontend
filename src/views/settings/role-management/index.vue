@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-card class="card" shadow="hover">
-      <b>User management</b>
+      <b>Role management</b>
       <div class="page-content">
         <Search
           :search-form="searchModel"
@@ -14,7 +14,6 @@
         <Add
           :dialog-form-visible="dialogFormVisible"
           :is-update-mode="isUpdateMode"
-          :roles="roles"
           :form="formModel"
           @close-dialog="closeDialog"
         />
@@ -44,8 +43,7 @@ import List from './components/List'
 import Add from './components/Add'
 import Pagination from '@/components/Pagination'
 
-import { doDelete, filter } from '@/api/user-management'
-import { getList as getListRole } from '@/api/role-management'
+import { doDelete, filter } from '@/api/role-management'
 import { showSuccessMessage, createConfirmBox } from '@/utils/commons'
 
 export default {
@@ -62,7 +60,6 @@ export default {
       formModel: {},
       searchModel: {},
       selectedModels: [],
-      roles: [],
       list: undefined,
       loading: true,
       pagination: {
@@ -86,28 +83,21 @@ export default {
       this.showResult(response)
       this.loading = false
     },
-    async handleAdd() {
-      await this.getRoles()
+    handleAdd() {
       this.formModel = {}
       this.isUpdateMode = false
       this.dialogFormVisible = true
     },
-    async handleUpdate(model) {
-      await this.getRoles()
+    handleUpdate(model) {
       this.isUpdateMode = true
       this.dialogFormVisible = true
       this.formModel = model
-    },
-    async getRoles() {
-      this.roles = []
-      const response = await getListRole()
-      this.roles = response
     },
     handleSelect(model) {
       this.selectedModels = model
     },
     async handleDelete() {
-      await createConfirmBox(this, this.$i18n.t('settings.user.multipleDeleteWarning'))
+      await createConfirmBox(this, this.$i18n.t('settings.role.multipleDeleteWarning'))
       this.continueDelete()
     },
     async continueDelete() {

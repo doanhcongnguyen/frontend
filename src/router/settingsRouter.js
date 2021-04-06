@@ -14,10 +14,10 @@ const SettingsRouter = {
       meta: { title: 'User Management', icon: 'example' }
     },
     {
-      path: 'team',
-      name: 'TeamManagement',
-      component: () => import('@/views/settings/user-management/index'),
-      meta: { title: 'Team Management', icon: 'form' }
+      path: 'role',
+      name: 'RoleManagement',
+      component: () => import('@/views/settings/role-management/index'),
+      meta: { title: 'Role Management', icon: 'form' }
     }
   ]
 }

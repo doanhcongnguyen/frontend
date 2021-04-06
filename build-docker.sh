@@ -1,1 +1,1 @@
-sudo docker build . -t pms-frontend
+sudo docker build . -t frontend

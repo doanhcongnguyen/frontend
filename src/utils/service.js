@@ -71,13 +71,13 @@ service.interceptors.response.use(
   },
   error => {
     const response = error.response
-    console.log(JSON.stringify(response)) // for debug
     if (response && response.data) {
       const data = response.data
       if (data.error === 'invalid_token' || data.status === 401) {
         redirectToLogin()
       } else {
         showErrorWithMessage(data.message)
+        return Promise.reject(error)
       }
     }
   }

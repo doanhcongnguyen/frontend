@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <b>DZS © 2020</b> <span class="font10">version <b>{{ version }}</b></span>
+    <span class="font10">v{{ version }}</span>
   </div>
 </template>
 
@@ -21,10 +21,10 @@ export default {
 
 .footer {
   background: $footerBg;
-  height: 40px;
+  height: 2rem;
   text-align: right;
-  padding-top: 10px;
-  padding-right: 20px;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
 }
 
 .font10 {

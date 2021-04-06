@@ -3,22 +3,27 @@
     <el-dialog :title="isUpdateMode ? $t('settings.user.updateTitle') : $t('settings.user.createTitle')" :before-close="closeDialog" :visible.sync="dialogFormVisible">
       <el-form ref="form" :rules="rules" :model="form" label-position="right" label-width="14rem" size="mini">
         <el-form-item :label="$t('settings.user.name')" prop="username">
-          <el-input v-model="form.username" class="form-item" />
+          <el-input v-model="form.username" class="form-item" @keyup.enter.native="save" />
         </el-form-item>
         <el-form-item :label="$t('settings.user.fullName')" prop="fullName">
-          <el-input v-model="form.fullName" class="form-item" />
+          <el-input v-model="form.fullName" class="form-item" @keyup.enter.native="save" />
         </el-form-item>
         <el-form-item v-if="isUpdateMode" :label="$t('settings.user.changePass')">
           <el-checkbox v-model="form.changePass" />
         </el-form-item>
         <el-form-item v-if="!isUpdateMode || (isUpdateMode && form.changePass)" :label="$t('settings.user.password')">
-          <el-input v-model="form.password" type="password" class="form-item" />
+          <el-input v-model="form.password" type="password" class="form-item" @keyup.enter.native="save" />
+        </el-form-item>
+        <el-form-item :label="$t('settings.user.role')">
+          <el-select v-model="form.roles" multiple class="form-item" value-key="id">
+            <el-option v-for="role in roles" :key="role.id" :label="role.code" :value="role" />
+          </el-select>
         </el-form-item>
         <el-form-item :label="$t('settings.user.phoneNumber')">
-          <el-input v-model="form.telephone" class="form-item" />
+          <el-input v-model="form.telephone" class="form-item" @keyup.enter.native="save" />
         </el-form-item>
         <el-form-item :label="$t('settings.user.email')">
-          <el-input v-model="form.email" class="form-item" />
+          <el-input v-model="form.email" class="form-item" @keyup.enter.native="save" />
         </el-form-item>
         <el-form-item>
           <el-button @click="closeDialog">{{ $t('global.button.cancel') }}</el-button>
@@ -47,6 +52,10 @@ export default {
       default: function() { return {} },
       type: Object,
       required: true
+    },
+    roles: {
+      default: () => { return [] },
+      type: Array
     }
   },
   data() {
@@ -67,13 +76,13 @@ export default {
     },
     async onSubmit() {
       const formData = this.createFormData()
-      const response = this.isUpdateMode ? await update(formData) : await create(formData)
-      this.showResultMessage(response)
+      this.isUpdateMode ? await update(formData) : await create(formData)
+      this.showResultMessage()
     },
     createFormData() {
       return Object.assign({}, this.form)
     },
-    showResultMessage(response) {
+    showResultMessage() {
       showSuccessMessage()
       this.closeDialog()
     },

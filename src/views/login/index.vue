@@ -1,58 +1,46 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
-      <div class="title-container">
-        <h3 class="title">Login</h3>
-      </div>
-
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-      </el-form-item>
-
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="loginForm.language" placeholder="Language" style="width: 33rem">
-          <el-option v-for="item in languages" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="text-align-right">
-        <span>v{{ appVersion }}</span>
-      </div>
-    </el-form>
+    <el-card class="card login-card" shadow="hover">
+      <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14" class="login-logo">
+        <img src="../../assets/login.jpg" height="300" width="455">
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" class="form-login">
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on">
+          <el-form-item prop="username">
+            <el-col :span="2">
+              <span class="svg-container">
+                <svg-icon icon-class="user" />
+              </span>
+            </el-col>
+            <el-col :span="22">
+              <el-input v-model="loginForm.username" placeholder="Username" type="text" auto-complete="on" @keyup.enter.native="handleLogin" />
+            </el-col>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-col :span="2">
+              <span class="svg-container">
+                <svg-icon icon-class="password" />
+              </span>
+            </el-col>
+            <el-col :span="22">
+              <el-input :key="passwordType" v-model="loginForm.password" :type="passwordType" placeholder="Password" name="password" auto-complete="on" @keyup.enter.native="handleLogin" />
+              <span class="show-pwd" @click="showPwd">
+                <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+              </span>
+            </el-col>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="loginForm.language" placeholder="Language" style="width: 19rem">
+              <el-option v-for="item in languages" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+          </el-form-item>
+          <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+          <div class="text-align-right">
+            <span>v{{ appVersion }}</span>
+          </div>
+        </el-form>
+      </el-col>
+    </el-card>
   </div>
 </template>
 
@@ -125,117 +113,55 @@ export default {
 }
 </script>
 
-<style lang="scss">
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
+<style rel="stylesheet/scss" lang="scss" scoped>
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #ccc;
+}
 
-$bg:#ecf5ff;
-$light_gray:#1076e2;
-$cursor: #fff;
+.login-card {
+  max-width: 980px;
+  width: 980px;
+  min-height: 506px;
+  line-height: 50px;
+  background: #FFFFFF;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.13);
+  border-radius: 48px;
+  text-align: center;
+}
+
+.form-login {
+  margin-top: 6.5rem;
+}
+
+.login-logo {
+  vertical-align: middle;
+  margin-top: 4.5rem;
+  margin-left: -1rem;
+}
+
+.svg-container {
+  font-size: 20px;
+  color: #889aa4;
+  cursor: pointer;
+  user-select: none;
+}
+
+.show-pwd {
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  font-size: 16px;
+  color: #889aa4;
+  cursor: pointer;
+  user-select: none;
+}
 
 .text-align-right {
   text-align: right;
-}
-
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
-}
-
-/* reset element-ui css */
-.login-container {
-  .el-input {
-    display: inline-block;
-    height: 47px;
-    width: 85%;
-
-    input {
-      background: #dcdfe6;
-      border: 0px;
-      -webkit-appearance: none;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: #000000;
-      height: 47px;
-      caret-color: $cursor;
-
-      &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
-      }
-    }
-  }
-
-  .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
-  }
-}
-</style>
-
-<style lang="scss" scoped>
-$bg:#ecf5ff;
-$dark_gray:#889aa4;
-// $light_gray:#eee;
-$light_gray:#1076e2;
-
-.login-container {
-  min-height: 100%;
-  width: 100%;
-  background-color: $bg;
-  overflow: hidden;
-
-  .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-
-  .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
-    }
-  }
-
-  .svg-container {
-    padding: 6px 5px 6px 15px;
-    color: $dark_gray;
-    vertical-align: middle;
-    width: 30px;
-    display: inline-block;
-  }
-
-  .title-container {
-    position: relative;
-
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-  }
-
-  .show-pwd {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    font-size: 16px;
-    color: $dark_gray;
-    cursor: pointer;
-    user-select: none;
-  }
+  font-size: 14px;
 }
 </style>

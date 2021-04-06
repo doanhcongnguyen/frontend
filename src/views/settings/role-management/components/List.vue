@@ -15,15 +15,7 @@
   >
     <el-table-column :reserve-selection="true" :min-width="60" type="selection" align="center" />
     <el-table-column label="#" :min-width="20" type="index" align="center" />
-    <el-table-column :label="$t('settings.user.name')" :min-width="160" prop="username" align="left" header-align="center" />
-    <el-table-column :label="$t('settings.user.fullName')" :min-width="100" prop="fullName" align="center" header-align="center" />
-    <el-table-column :label="$t('settings.user.role')" :min-width="100" align="left" header-align="center">
-      <template slot-scope="scope">
-        <span v-for="role in scope.row.roles" :key="role.id"> - {{ role.code }}<br> </span>
-      </template>
-    </el-table-column>
-    <el-table-column :label="$t('settings.user.phoneNumber')" :min-width="100" prop="telephone" align="center" header-align="center" />
-    <el-table-column :label="$t('settings.user.email')" :min-width="100" prop="email" align="center" header-align="center" />
+    <el-table-column :label="$t('settings.role.code')" :min-width="160" prop="code" align="left" header-align="center" />
     <el-table-column :label="$t('global.label.action')" :min-width="90" align="center">
       <template slot-scope="scope">
         <el-tooltip :content="$t('global.button.update')" placement="top" effect="light">
@@ -38,7 +30,7 @@
 </template>
 
 <script>
-import { doDelete } from '@/api/user-management'
+import { doDelete } from '@/api/role-management'
 import { showSuccessMessage, createConfirmBox } from '@/utils/commons'
 
 export default {
@@ -61,7 +53,7 @@ export default {
       this.$emit('on-handle-update', model)
     },
     async handleDeleteItem(model) {
-      await createConfirmBox(this, this.$i18n.t('settings.user.deleteWarning') + ` ${model.username}?`)
+      await createConfirmBox(this, this.$i18n.t('settings.role.deleteWarning') + ` ${model.code}?`)
       this.continueDeleteItem(model)
     },
     async continueDeleteItem(model) {

@@ -37,10 +37,18 @@ export default {
       changePass: 'Change password?',
       password: 'Password',
       email: 'Email',
+      role: 'Role',
       createTitle: 'Create user',
       updateTitle: 'Update user',
       multipleDeleteWarning: 'Are you sure to delete selected users?',
       deleteWarning: 'Are you want to delete user'
+    },
+    role: {
+      code: 'Code',
+      createTitle: 'Create role',
+      updateTitle: 'Update role',
+      multipleDeleteWarning: 'Are you sure to delete selected roles?',
+      deleteWarning: 'Are you want to delete role'
     }
   },
   route: {
