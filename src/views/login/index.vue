@@ -103,6 +103,7 @@ export default {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch((e) => {
+            console.log(e)
             showErrorWithMessage('Invalid username or password')
             this.loading = false
           })

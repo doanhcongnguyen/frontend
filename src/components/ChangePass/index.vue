@@ -52,10 +52,10 @@ export default {
       })
     },
     async onSubmit() {
-      const response = await changePass(this.form)
-      this.showResultMessage(response)
+      await changePass(this.form)
+      this.showResultMessage()
     },
-    showResultMessage(response) {
+    showResultMessage() {
       showSuccessMessage()
       this.closeDialog()
     },
